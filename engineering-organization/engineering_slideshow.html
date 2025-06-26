@@ -111,13 +111,19 @@
 
         .navigation {
             position: absolute;
-            bottom: 30px;
+            bottom: 280px; /* Moved up to avoid speaker notes */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: 15px;
             align-items: center;
             z-index: 1000;
+            transition: bottom 0.3s ease;
+        }
+        
+        /* Move navigation down when speaker notes are hidden */
+        body:not(.notes-visible) .navigation {
+            bottom: 30px;
         }
 
         .nav-btn {
@@ -579,6 +585,7 @@
             speakerNotesVisible = !speakerNotesVisible;
             
             notes.classList.toggle('visible', speakerNotesVisible);
+            document.body.classList.toggle('notes-visible', speakerNotesVisible);
             
             if (speakerNotesVisible) {
                 button.textContent = '🔽 Hide Speaker Notes';
