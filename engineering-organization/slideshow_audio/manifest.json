@@ -1,0 +1,57 @@
+{
+  "voice": "shimmer",
+  "model": "tts-1",
+  "generated": "2025-06-26T20:15:03Z",
+  "files": [
+    {
+      "id": "slide-0",
+      "filename": "slide-0.mp3",
+      "textLength": 221
+    },
+    {
+      "id": "slide-1",
+      "filename": "slide-1.mp3",
+      "textLength": 469
+    },
+    {
+      "id": "slide-2",
+      "filename": "slide-2.mp3",
+      "textLength": 310
+    },
+    {
+      "id": "slide-3",
+      "filename": "slide-3.mp3",
+      "textLength": 339
+    },
+    {
+      "id": "slide-4",
+      "filename": "slide-4.mp3",
+      "textLength": 277
+    },
+    {
+      "id": "slide-5",
+      "filename": "slide-5.mp3",
+      "textLength": 305
+    },
+    {
+      "id": "slide-6",
+      "filename": "slide-6.mp3",
+      "textLength": 285
+    },
+    {
+      "id": "slide-7",
+      "filename": "slide-7.mp3",
+      "textLength": 369
+    },
+    {
+      "id": "slide-8",
+      "filename": "slide-8.mp3",
+      "textLength": 359
+    },
+    {
+      "id": "slide-9",
+      "filename": "slide-9.mp3",
+      "textLength": 392
+    }
+  ]
+}

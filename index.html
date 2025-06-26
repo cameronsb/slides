@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+        }
+
+        .slideshows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .slideshow-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .slideshow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .slideshow-card .thumbnail {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slideshow-card .thumbnail::before {
+            content: '🎤';
+            font-size: 4em;
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .slideshow-card .thumbnail .slide-count {
+            background: rgba(255,255,255,0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #667eea;
+            z-index: 1;
+            position: relative;
+        }
+
+        .slideshow-card .content {
+            padding: 25px;
+        }
+
+        .slideshow-card h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .slideshow-card .description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .slideshow-card .metadata {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+
+        .slideshow-card .metadata span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .about-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            color: #7f8c8d;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .about-section ul {
+            list-style: none;
+            color: #7f8c8d;
+            line-height: 1.8;
+        }
+
+        .about-section li::before {
+            content: '✓ ';
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .slideshows-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Slideshow Collection</h1>
+            <p>Interactive presentations with AI-generated narration</p>
+        </div>
+
+        <div class="slideshows-grid">
+            <!-- Engineering Organization Improvement -->
+            <a href="engineering-organization/" class="slideshow-card">
+                <div class="thumbnail">
+                    <div class="slide-count">10 Slides</div>
+                </div>
+                <div class="content">
+                    <h2>Engineering Organization Improvement</h2>
+                    <p class="description">
+                        A strategic approach to implementing systematic workflow improvements in engineering organizations through discovery, piloting, and adoption phases.
+                    </p>
+                    <div class="metadata">
+                        <span>🎯 Strategy</span>
+                        <span>⏱️ ~8 min</span>
+                        <span>🔊 Audio</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Placeholder for future slideshows -->
+            <!-- 
+            <a href="another-slideshow/" class="slideshow-card">
+                <div class="thumbnail">
+                    <div class="slide-count">X Slides</div>
+                </div>
+                <div class="content">
+                    <h2>Title</h2>
+                    <p class="description">Description</p>
+                    <div class="metadata">
+                        <span>🏷️ Category</span>
+                        <span>⏱️ Duration</span>
+                        <span>🔊 Audio</span>
+                    </div>
+                </div>
+            </a>
+            -->
+        </div>
+
+        <div class="about-section">
+            <h2>About This Collection</h2>
+            <p>
+                This is a collection of interactive slideshow presentations featuring AI-generated narration using OpenAI's text-to-speech technology. Each presentation is designed to be engaging, informative, and accessible.
+            </p>
+            <p><strong>Features:</strong></p>
+            <ul>
+                <li>High-quality AI narration with adjustable playback speed</li>
+                <li>Keyboard navigation and speaker notes</li>
+                <li>Responsive design for all devices</li>
+                <li>No dependencies - pure HTML/CSS/JavaScript</li>
+            </ul>
+            <p style="margin-top: 20px;">
+                <strong>Navigation:</strong> Use arrow keys to navigate, spacebar to play/pause audio, and 'S' to toggle speaker notes.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
