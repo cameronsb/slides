@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "title": "Transformed Presentation",
+    "subtitle": "Generated from your input content",
+    "author": "",
+    "date": "2025-06-27",
+    "category": "Strategy",
+    "duration": "8 min",
+    "voice": "shimmer",
+    "hasAudio": false,
+    "titleScript": "This presentation explores: Hey team,\n\nBeen thinking about our deployment process. It's taking way too long - sometimes 45 mins ..."
+  },
+  "slides": [
+    {
+      "id": 1,
+      "type": "content",
+      "title": "Key Insights from Your Content",
+      "content": [
+        "First key point extracted from input",
+        "Second important observation",
+        "Third critical element"
+      ],
+      "script": "Let's explore the key insights from your content. [This would be generated based on your actual input]"
+    },
+    {
+      "id": 2,
+      "type": "content",
+      "title": "The Core Challenge",
+      "content": [
+        "Main challenge identified",
+        "Contributing factors",
+        "Impact on stakeholders"
+      ],
+      "script": "The challenge we're addressing is significant. [LLM would expand on this based on your content]"
+    },
+    {
+      "id": 3,
+      "type": "content",
+      "title": "Proposed Solution",
+      "content": [
+        "Solution approach",
+        "Key benefits",
+        "Implementation strategy"
+      ],
+      "script": "Here's how we can address this challenge effectively. [Detailed explanation would go here]"
+    },
+    {
+      "id": 4,
+      "type": "conclusion",
+      "title": "Next Steps",
+      "subtitle": "Moving forward together",
+      "content": [
+        "Immediate action items",
+        "Timeline for implementation",
+        "Success metrics"
+      ],
+      "script": "To make this a reality, here are our concrete next steps. [Call to action based on content]"
+    }
+  ]
+}

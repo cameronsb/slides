@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "title": "Your Presentation Title",
+    "subtitle": "A compelling subtitle that captures attention",
+    "author": "Your Name",
+    "date": "2024-01-26",
+    "category": "Strategy",
+    "duration": "10 min",
+    "voice": "shimmer",
+    "hasAudio": false,
+    "titleScript": "Welcome! This presentation will take you through [topic]. We'll explore [key points] and discover [outcome]."
+  },
+  "slides": [
+    {
+      "id": 1,
+      "type": "content",
+      "title": "The Current Situation",
+      "subtitle": "Understanding where we are today",
+      "content": [
+        "First key observation about the current state",
+        "Second important factor to consider",
+        "Third element that impacts our situation"
+      ],
+      "example": "For instance, we've seen this happen in our recent project...",
+      "script": "Let's start by examining our current situation. [Elaborate on each point with specific examples and data]",
+      "notes": "Remember to pause after each point for emphasis"
+    },
+    {
+      "id": 2,
+      "type": "content",
+      "title": "The Challenge",
+      "content": [
+        "Primary obstacle we're facing",
+        "Secondary complications",
+        "Hidden factors that make this difficult"
+      ],
+      "script": "The challenge we're facing is multi-faceted. [Explain each challenge and its implications]"
+    },
+    {
+      "id": 3,
+      "type": "visual",
+      "title": "The Opportunity",
+      "subtitle": "What becomes possible",
+      "content": [
+        "Immediate benefits we can capture",
+        "Long-term value creation",
+        "Competitive advantages"
+      ],
+      "visual": {
+        "type": "chart",
+        "data": {
+          "description": "Growth potential visualization"
+        }
+      },
+      "script": "Now let's look at the opportunity before us. [Paint a picture of the possible future]"
+    },
+    {
+      "id": 4,
+      "type": "content",
+      "title": "Our Approach",
+      "subtitle": "A systematic path forward",
+      "content": [
+        "Phase 1: Foundation building",
+        "Phase 2: Implementation",
+        "Phase 3: Scale and optimize"
+      ],
+      "script": "Here's how we'll tackle this systematically. [Detail each phase with specific actions]"
+    },
+    {
+      "id": 5,
+      "type": "content",
+      "title": "Expected Outcomes",
+      "content": [
+        "Measurable improvement in key metrics",
+        "Enhanced team capabilities",
+        "Sustainable competitive advantage"
+      ],
+      "script": "By following this approach, we expect to see significant results. [Quantify expected outcomes]"
+    },
+    {
+      "id": 6,
+      "type": "conclusion",
+      "title": "Next Steps",
+      "subtitle": "Moving forward together",
+      "content": [
+        "Immediate action: Schedule follow-up meeting",
+        "This week: Gather initial feedback",
+        "This month: Launch pilot program"
+      ],
+      "script": "To make this a reality, here are our next steps. [Create urgency and commitment]"
+    }
+  ]
+}

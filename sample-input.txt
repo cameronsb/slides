@@ -1,0 +1,24 @@
+Hey team,
+
+Been thinking about our deployment process. It's taking way too long - sometimes 45 mins just to get a simple fix out. The manual steps are killing us. 
+
+I've been experimenting with some automation ideas:
+- GitHub Actions for the build process
+- Automated testing before deploy
+- One-click rollback capability
+
+Other teams at similar companies are deploying 10x per day. We're doing 2-3 per week max.
+
+The benefits would be huge:
+- Faster feature delivery
+- Less stress during deploys  
+- More time for actual development
+- Better reliability
+
+I think we could implement this in phases:
+1. Start with automating the build (2 weeks)
+2. Add automated testing (1 week)
+3. Implement staging environment (2 weeks)
+4. Full CI/CD pipeline (1 week)
+
+Would love to discuss this at our next team meeting. I've already prototyped some of this and it's working great.

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformed Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 700px;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .slide .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .slide ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .slide li {
+            background: #f8f9fa;
+            margin: 15px 0;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 6px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            transition: transform 0.2s ease;
+        }
+
+        .slide li:hover {
+            transform: translateX(5px);
+            background: #e9ecef;
+        }
+
+        .example {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #856404;
+        }
+
+        .example::before {
+            content: "💡 Example: ";
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 280px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1000;
+            transition: bottom 0.3s ease;
+        }
+        
+        body:not(.notes-visible) .navigation {
+            bottom: 30px;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress {
+            background: white;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .speaker-notes {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            line-height: 1.6;
+            border-top: 3px solid #667eea;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+        }
+
+        .speaker-notes.visible {
+            transform: translateY(0);
+        }
+
+        .speaker-notes h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .speaker-toggle {
+            position: absolute;
+            top: 30px;
+            right: 160px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .speaker-toggle:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .speech-control {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: white;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .speech-control:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .speech-control:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .keyboard-help {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            font-size: 0.9em;
+            opacity: 0.8;
+            z-index: 1000;
+        }
+
+        .speed-control {
+            position: absolute;
+            top: 80px;
+            right: 30px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .speed-control label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .speed-control input[type="range"] {
+            width: 120px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .speed-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .speed-control input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .speed-control #speedValue {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 40px;
+        }
+
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Slide type specific styles */
+        .slide.visual-slide .visual-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .slide.conclusion-slide {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .slide.conclusion-slide h1 {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="keyboard-help">
+        Use ← → arrow keys to navigate • Press 'S' for notes • Spacebar for speech
+    </div>
+
+    <div class="speed-control">
+        <label for="speedSlider">Speed:</label>
+        <input type="range" id="speedSlider" min="0.5" max="3" step="0.1" value="1.5">
+        <span id="speedValue">1.5x</span>
+    </div>
+
+    <button class="speaker-toggle" onclick="toggleSpeakerNotes()" id="speakerToggle">
+        📝 Show Speaker Notes
+    </button>
+
+    <button class="speech-control" onclick="toggleSpeech()" id="speechControl">
+        🔊 Play
+    </button>
+
+    <div class="slideshow-container">
+        <!-- Slides will be dynamically generated -->
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()" id="prevBtn">← Previous</button>
+        <div class="progress">
+            <span id="currentSlide">1</span> / <span id="totalSlides">0</span>
+        </div>
+        <button class="nav-btn" onclick="nextSlide()" id="nextBtn">Next →</button>
+    </div>
+
+    <div class="speaker-notes" id="speakerNotes">
+        <h4>🎤 Speaker Script</h4>
+        <div id="notesContent"></div>
+    </div>
+
+    <script>
+        // Load slideshow data from JSON
+        let slideshowData = {
+  "metadata": {
+    "title": "Transformed Presentation",
+    "subtitle": "Generated from your input content",
+    "author": "",
+    "date": "2025-06-27",
+    "category": "Strategy",
+    "duration": "8 min",
+    "voice": "shimmer",
+    "hasAudio": false,
+    "titleScript": "This presentation explores: Hey team,\n\nBeen thinking about our deployment process. It's taking way too long - sometimes 45 mins ..."
+  },
+  "slides": [
+    {
+      "id": 1,
+      "type": "content",
+      "title": "Key Insights from Your Content",
+      "content": [
+        "First key point extracted from input",
+        "Second important observation",
+        "Third critical element"
+      ],
+      "script": "Let's explore the key insights from your content. [This would be generated based on your actual input]"
+    },
+    {
+      "id": 2,
+      "type": "content",
+      "title": "The Core Challenge",
+      "content": [
+        "Main challenge identified",
+        "Contributing factors",
+        "Impact on stakeholders"
+      ],
+      "script": "The challenge we're addressing is significant. [LLM would expand on this based on your content]"
+    },
+    {
+      "id": 3,
+      "type": "content",
+      "title": "Proposed Solution",
+      "content": [
+        "Solution approach",
+        "Key benefits",
+        "Implementation strategy"
+      ],
+      "script": "Here's how we can address this challenge effectively. [Detailed explanation would go here]"
+    },
+    {
+      "id": 4,
+      "type": "conclusion",
+      "title": "Next Steps",
+      "subtitle": "Moving forward together",
+      "content": [
+        "Immediate action items",
+        "Timeline for implementation",
+        "Success metrics"
+      ],
+      "script": "To make this a reality, here are our concrete next steps. [Call to action based on content]"
+    }
+  ]
+};
+
+        let currentSlideIndex = 0;
+        let speakerNotesVisible = false;
+        let currentAudio = null;
+        let isPlaying = false;
+        let currentPlaybackRate = 1.5;
+        let autoAdvanceEnabled = true;
+
+        // Preload all audio files
+        const audioFiles = {};
+        
+        function preloadAudio() {
+            const hasAudio = slideshowData.metadata && slideshowData.metadata.hasAudio;
+            if (!hasAudio) return;
+            
+            const totalSlides = slideshowData.slides.length + 1; // +1 for title slide
+            for (let i = 0; i < totalSlides; i++) {
+                const audio = new Audio(`slideshow_audio/slide-${i}.mp3`);
+                audio.preload = 'auto';
+                audioFiles[`slide-${i}`] = audio;
+                
+                // Set up event listeners for each audio
+                audio.addEventListener('ended', handleAudioEnded);
+                audio.addEventListener('play', () => {
+                    isPlaying = true;
+                    updateSpeechButton();
+                });
+                audio.addEventListener('pause', () => {
+                    isPlaying = false;
+                    updateSpeechButton();
+                });
+            }
+        }
+
+        function generateSlides() {
+            const container = document.querySelector('.slideshow-container');
+            
+            // Title slide
+            const titleSlide = document.createElement('div');
+            titleSlide.className = 'slide title-slide active';
+            titleSlide.innerHTML = `
+                <h1>${slideshowData.metadata.title}</h1>
+                <div class="subtitle">${slideshowData.metadata.subtitle || ''}</div>
+                ${slideshowData.metadata.author ? `<p style="margin-top: 40px; color: #7f8c8d;">By ${slideshowData.metadata.author}</p>` : ''}
+            `;
+            container.appendChild(titleSlide);
+
+            // Content slides
+            slideshowData.slides.forEach((slideData, index) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${slideData.type ? slideData.type + '-slide' : ''}`;
+                
+                let content = `<h1>${slideData.title}</h1>`;
+                
+                if (slideData.subtitle) {
+                    content += `<div class="subtitle">${slideData.subtitle}</div>`;
+                }
+                
+                if (slideData.content && slideData.content.length > 0) {
+                    content += '<ul>';
+                    slideData.content.forEach(item => {
+                        content += `<li>${item}</li>`;
+                    });
+                    content += '</ul>';
+                }
+                
+                if (slideData.example) {
+                    content += `<div class="example">${slideData.example}</div>`;
+                }
+                
+                if (slideData.visual) {
+                    content += `<div class="visual-container">${renderVisual(slideData.visual)}</div>`;
+                }
+                
+                slide.innerHTML = content;
+                container.appendChild(slide);
+            });
+
+            document.getElementById('totalSlides').textContent = slideshowData.slides.length + 1;
+            updateSpeakerNotes();
+        }
+
+        function renderVisual(visual) {
+            // Placeholder for visual rendering
+            // Could be extended to support charts, diagrams, etc.
+            return `<div style="padding: 40px; background: #f0f0f0; border-radius: 8px; color: #666;">
+                [Visual: ${visual.type}]
+            </div>`;
+        }
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Stop any current audio when changing slides
+            stopAudio();
+            
+            if (index >= 0 && index < slides.length) {
+                slides[index].classList.add('active');
+                currentSlideIndex = index;
+                updateNavigation();
+                updateSpeakerNotes();
+                logSpeakerScript();
+            }
+        }
+
+        function logSpeakerScript() {
+            if (currentSlideIndex === 0) {
+                console.log("🎤 SPEAKER SCRIPT - Title Slide:");
+                console.log(slideshowData.metadata.titleScript || "Welcome to this presentation.");
+            } else {
+                const slideData = slideshowData.slides[currentSlideIndex - 1];
+                console.log(`🎤 SPEAKER SCRIPT - Slide ${currentSlideIndex + 1}: ${slideData.title}`);
+                console.log(slideData.script || "No script available for this slide.");
+            }
+            console.log("---");
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.slide');
+            if (currentSlideIndex < slides.length - 1) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+
+        function updateNavigation() {
+            const slides = document.querySelectorAll('.slide');
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === slides.length - 1;
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+        }
+
+        function updateSpeakerNotes() {
+            const notesContent = document.getElementById('notesContent');
+            
+            if (currentSlideIndex === 0) {
+                notesContent.innerHTML = slideshowData.metadata.titleScript || 
+                    "<strong>Welcome!</strong> Begin your presentation here.<br><br><em>💡 Tip: The speaker script for each slide is also logged to the browser console (F12) for easy reference.</em>";
+            } else {
+                const slideData = slideshowData.slides[currentSlideIndex - 1];
+                notesContent.innerHTML = slideData.script || "No speaker notes for this slide.";
+                if (slideData.notes) {
+                    notesContent.innerHTML += `<br><br><em>Additional notes: ${slideData.notes}</em>`;
+                }
+            }
+        }
+
+        function toggleSpeakerNotes() {
+            const notes = document.getElementById('speakerNotes');
+            const button = document.getElementById('speakerToggle');
+            speakerNotesVisible = !speakerNotesVisible;
+            
+            notes.classList.toggle('visible', speakerNotesVisible);
+            document.body.classList.toggle('notes-visible', speakerNotesVisible);
+            
+            if (speakerNotesVisible) {
+                button.textContent = '🔽 Hide Speaker Notes';
+                button.style.background = '#667eea';
+                button.style.color = 'white';
+            } else {
+                button.textContent = '📝 Show Speaker Notes';
+                button.style.background = 'white';
+                button.style.color = '#667eea';
+            }
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            isPlaying = false;
+            updateSpeechButton();
+        }
+
+        function handleAudioEnded() {
+            isPlaying = false;
+            updateSpeechButton();
+            
+            // Auto-advance to next slide if enabled
+            if (autoAdvanceEnabled) {
+                const slides = document.querySelectorAll('.slide');
+                if (currentSlideIndex < slides.length - 1) {
+                    setTimeout(() => {
+                        nextSlide();
+                        // Optionally start playing the next slide automatically
+                        setTimeout(() => {
+                            playAudio();
+                        }, 500);
+                    }, 1000); // Wait 1 second before advancing
+                }
+            }
+        }
+
+        function playAudio() {
+            const hasAudio = slideshowData.metadata && slideshowData.metadata.hasAudio;
+            if (!hasAudio) {
+                console.log("Audio files not yet generated for this slideshow.");
+                return;
+            }
+            
+            stopAudio(); // Stop any current audio
+            
+            const audioKey = `slide-${currentSlideIndex}`;
+            currentAudio = audioFiles[audioKey];
+            
+            if (currentAudio) {
+                currentAudio.playbackRate = currentPlaybackRate;
+                currentAudio.play().catch(err => {
+                    console.error('Error playing audio:', err);
+                });
+            } else {
+                console.error('Audio file not found for slide:', currentSlideIndex);
+            }
+        }
+
+        function toggleSpeech() {
+            if (isPlaying) {
+                stopAudio();
+            } else {
+                playAudio();
+            }
+        }
+
+        function updateSpeechButton() {
+            const button = document.getElementById('speechControl');
+            if (isPlaying) {
+                button.textContent = '⏸️ Stop';
+                button.style.background = '#e74c3c';
+                button.style.color = 'white';
+            } else {
+                button.textContent = '🔊 Play';
+                button.style.background = 'white';
+                button.style.color = '#e74c3c';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (event.key === 's' || event.key === 'S') {
+                event.preventDefault();
+                toggleSpeakerNotes();
+            } else if (event.key === ' ' || event.key === 'Spacebar') {
+                event.preventDefault();
+                toggleSpeech();
+            }
+        });
+
+        // Speed control handling
+        document.getElementById('speedSlider').addEventListener('input', function(e) {
+            currentPlaybackRate = parseFloat(e.target.value);
+            document.getElementById('speedValue').textContent = currentPlaybackRate.toFixed(1) + 'x';
+            
+            // Update playback rate for all audio elements
+            Object.values(audioFiles).forEach(audio => {
+                audio.playbackRate = currentPlaybackRate;
+            });
+        });
+
+        // Console command to toggle auto-advance
+        window.toggleAutoAdvance = function() {
+            autoAdvanceEnabled = !autoAdvanceEnabled;
+            console.log(`🔄 Auto-advance is now ${autoAdvanceEnabled ? 'ENABLED' : 'DISABLED'}`);
+            console.log('When enabled, slides will automatically progress after speech completes.');
+        };
+
+        // Initialize slideshow
+        preloadAudio();
+        generateSlides();
+        updateSpeechButton();
+        logSpeakerScript();
+        
+        // Log initial help
+        console.log('🎯 Slideshow Controls:');
+        console.log('• Speed control slider is in the top-right corner');
+        console.log('• toggleAutoAdvance() - Toggle automatic slide progression after audio');
+        console.log('• Auto-advance is currently ENABLED by default');
+        if (slideshowData.metadata && slideshowData.metadata.hasAudio) {
+            console.log('• Audio files are ready to play');
+        } else {
+            console.log('• Audio files not yet generated - run generate_audio.py');
+        }
+    </script>
+</body>
+</html>
